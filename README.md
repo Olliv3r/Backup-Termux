@@ -17,10 +17,10 @@ Um script robusto e completo de automação de backups desenvolvido especificame
 ### Uso Básico
 ```bash
 # Tornar executável
-chmod +x backup_script.sh
+chmod +x backup_termux.sh
 
 # Executar imediatamente
-./backup_script.sh
+./backup_termux.sh
 ```
 
 Configuração via Variáveis de Ambiente
