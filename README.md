@@ -1,5 +1,4 @@
-```markdown
-# 🔄 Script de Backup Automatizado para Termux
+# Script de Backup Automatizado para Termux
 
 Um script robusto e completo de automação de backups desenvolvido especificamente para Termux em dispositivos Android. Oferece backups automáticos e agendados dos seus projetos com recursos profissionais e sistema de logs abrangente.
 
@@ -151,5 +150,3 @@ Código aberto - sinta-se livre para modificar e distribuir conforme necessário
 ---
 
 Nunca mais perca seu trabalho! 🎉
-
-```
