@@ -28,9 +28,9 @@ Configuração via Variáveis de Ambiente
 ```bash
 export BACKUP_PROJECT_DIR="$HOME/seu_projeto"
 export BACKUP_DRIVE_DIR="/storage/seu-cartao-sd"
-export BACKUP_MAX_COPIES=7
+export BACKUP_MAX_COPIES="10"
 
-./backup_script.sh
+./backup_termux.sh
 ```
 
 ⚙️ Configuração
@@ -38,7 +38,7 @@ export BACKUP_MAX_COPIES=7
 Variável Descrição Padrão
 BACKUP_PROJECT_DIR Diretório de origem para backup $HOME
 BACKUP_DRIVE_DIR Local de destino do backup $PREFIX/tmp
-BACKUP_MAX_COPIES Número de backups para reter 7
+BACKUP_MAX_COPIES Número de backups para reter 10
 
 📁 Estrutura do Backup
 
@@ -84,7 +84,7 @@ Com Termux Job Scheduler
 
 ```bash
 termux-job-scheduler \
-  --script "backup_script.sh" \
+  --script "backup_termux.sh" \
   --job-id "backup_diario" \
   --period-ms 86400000 \
   --persisted true
@@ -125,7 +125,7 @@ Comando Simples para Backup Diário
 
 ```bash
 termux-job-scheduler \
-  --script "backup_script.sh" \
+  --script "backup_termux.sh" \
   --job-id "meu_backup" \
   --period-ms 86400000 \
   --persisted true
