@@ -131,14 +131,6 @@ termux-job-scheduler \
   --persisted true
 ```
 
-Variáveis de Ambiente para Agendamento
-
-```bash
-export BACKUP_SCHEDULE_HOUR="14"
-export BACKUP_SCHEDULE_MINUTE="30"
-export BACKUP_SCHEDULE_WINDOW="15"
-```
-
 🤝 Contribuindo
 
 Sinta-se à vontade para enviar issues e solicitações de melhoria! Este script foi projetado para ser modular e facilmente extensível.
@@ -147,6 +139,4 @@ Sinta-se à vontade para enviar issues e solicitações de melhoria! Este script
 
 Código aberto - sinta-se livre para modificar e distribuir conforme necessário.
 
----
-
-Nunca mais perca seu trabalho! 🎉
+Por Olliv3r - Nunca mais perca seu trabalho! 🎉
