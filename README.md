@@ -60,13 +60,11 @@ nano backup_script.sh
 ```
 
 Altere estas linhas:
-<code>
-<pre>
+```bash
 readonly PROJECT_DIR="/sdcard/htdocs"                    # Seu caminho do projeto
 readonly BACKUP_DRIVE="/storage/6136-6464/Documents"     # Seu caminho do cartão SD
 readonly MAX_BACKUPS=5                                   # Número de backups para manter
-</pre>
-</code>
+```
 
 ### Sistema de Notificações
 
@@ -114,15 +112,11 @@ termux-job-scheduler \
 
 ### Estrutura de Diretórios
 
-<code>
-<pre>
 /storage/6136-6464/Documents/
 ├── backup_20231215_143000/     # Pasta de backup com timestamp
 ├── backup_20231216_143000/
 ├── backup.log                  # Logs das operações
 └── (mantém os últimos 5 backups)
-</pre>
-</code>
 
 ### Personalização
 
@@ -140,8 +134,6 @@ Modifique os padrões de exclusão na função get_exclude_patterns().
 
 ### Exemplo de Log e Notificações
 
-<code>
-<pre>
 [2024-01-15 14:30:00] === INICIANDO SISTEMA DE BACKUP ===
 📢 NOTIFICAÇÃO: "🔄 Backup Iniciado" - "Fazendo backup: htdocs"
 [2024-01-15 14:30:01] ✅ Diretório criado com sucesso
@@ -152,8 +144,6 @@ Modifique os padrões de exclusão na função get_exclude_patterns().
 [2024-01-15 14:30:15]    • Tamanho: 150MB
 [2024-01-15 14:30:15]    • Arquivos: 245
 [2024-01-15 14:30:15]    • Diretórios: 15
-</pre>
-</code>
 
 ### Solução de Problemas
 
