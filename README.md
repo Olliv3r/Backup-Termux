@@ -135,26 +135,29 @@ Modifique os padrões de exclusão na função get_exclude_patterns().
 ### Exemplo de Log e Notificações
 
 ```bash
-[2024-01-15 14:30:00] === INICIANDO SISTEMA DE BACKUP ===
-📢 NOTIFICAÇÃO: "🔄 Backup Iniciado" - "Fazendo backup: htdocs"
-[2024-01-15 14:30:01] ✅ Diretório criado com sucesso
-[2024-01-15 14:30:05] 🔄 Usando rsync (modo profissional)
-[2024-01-15 14:30:15] ✅ BACKUP CONCLUÍDO COM SUCESSO!
-📢 NOTIFICAÇÃO: "✅ Backup Concluído" - "htdocs - Tamanho: 150MB - Arquivos: 245"
-[2024-01-15 14:30:15] 📊 Estatísticas:
-[2024-01-15 14:30:15]    • Tamanho: 150MB
-[2024-01-15 14:30:15]    • Arquivos: 245
-[2024-01-15 14:30:15]    • Diretórios: 15
+...
+
+sent 33,209 bytes  received 408 bytes  67,234.00 bytes/sec
+total size is 31,599  speedup is 0.94
+[2025-10-12 03:43:43] BACKUP CONCLUÍDO COM SUCESSO!
+[2025-10-12 03:43:43] Estatísticas:
+[2025-10-12 03:43:43]   • Tamanho: 3.2M
+[2025-10-12 03:43:43]   • Arquivos: 19
+[2025-10-12 03:43:43]   • Diretórios: 5
+[2025-10-12 03:43:43]   • Local: backup_20251012_034339
+[2025-10-12 03:43:43] Verificando backups antigos...
+[2025-10-12 03:43:43] Backup finalizado com sucesso!
+[2025-10-12 03:43:43] =========================================
 ```
 
 ### Solução de Problemas
 
 Problemas Comuns:
 
-· "Permissão negada" - Execute termux-setup-storage
-· "Diretório não encontrado" - Verifique os caminhos PROJECT_DIR e BACKUP_DRIVE
-· "Backup não executa" - Verifique permissões do Termux Job Scheduler
-· "Notificações não funcionam" - Instale Termux:API e teste com termux-notification
+- "Permissão negada" - Execute termux-setup-storage
+- "Diretório não encontrado" - Verifique os caminhos PROJECT_DIR e BACKUP_DRIVE
+- "Backup não executa" - Verifique permissões do Termux Job Scheduler
+- "Notificações não funcionam" - Instale Termux:API e teste com termux-notification
 
 Verificar Configuração:
 
