@@ -37,8 +37,7 @@ termux-setup-storage
 
 O script usa as seguintes variáveis de ambiente. Você pode modificá-las diretamente no script:
 
-<code>
-<pre>
+```bash
 # Diretório do projeto para backup
 readonly PROJECT_DIR="/sdcard/htdocs"
 
@@ -50,8 +49,7 @@ readonly LOG_FILE="${BACKUP_DRIVE}/backup.log"
 
 # Número de versões de backup para manter
 readonly MAX_BACKUPS=5
-</pre>
-</code>
+```
 
 Como Modificar as Variáveis de Ambiente
 
