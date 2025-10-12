@@ -1,5 +1,9 @@
 # Script de Backup Automatizado para Termux
 
+[![GitHub stars](https://img.shields.io/github/stars/Olliv3r/Backup-Termux.svg)](https://github.com/Olliv3r/Backup-Termux/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Olliv3r/Backup-Termux)](https://github.com/Olliv3r/Backup-Termux/blob/main/LICENSE)
+
+
 Um script robusto e eficiente de automação de backup desenvolvido especificamente para Termux no Android. Este script fornece backups diários automáticos dos seus projetos com gerenciamento inteligente de arquivos e registro detalhado.
 
 ### Funcionalidades
@@ -16,8 +20,8 @@ Um script robusto e eficiente de automação de backup desenvolvido especificame
 
 Aplicativos Necessários:
 
-1. Termux (obrigatório) - Download na ![F-Droid](https://f-droid.org/pt_BR/packages/com.termux/)
-2. Termux:API (obrigatório para notificações) - Download na ![F-Droid](https://f-droid.org/pt_BR/packages/com.termux.api/)
+1. Termux (obrigatório) - Download na <a href="https://f-droid.org/pt_BR/packages/com.termux/" target="_blank">F-droid</a>
+2. Termux:API (obrigatório para notificações) - Download na <a href="https://f-droid.org/pt_BR/packages/com.termux.api/" target="_blank">F-droid</a>
 
 ### Pacotes Termux:
 
@@ -33,7 +37,8 @@ termux-setup-storage
 
 O script usa as seguintes variáveis de ambiente. Você pode modificá-las diretamente no script:
 
-```
+<code>
+<pre>
 # Diretório do projeto para backup
 readonly PROJECT_DIR="/sdcard/htdocs"
 
@@ -45,7 +50,8 @@ readonly LOG_FILE="${BACKUP_DRIVE}/backup.log"
 
 # Número de versões de backup para manter
 readonly MAX_BACKUPS=5
-```
+</pre>
+</code>
 
 Como Modificar as Variáveis de Ambiente
 
@@ -56,12 +62,13 @@ nano backup_script.sh
 ```
 
 Altere estas linhas:
-
-```
+<code>
+<pre>
 readonly PROJECT_DIR="/sdcard/htdocs"                    # Seu caminho do projeto
 readonly BACKUP_DRIVE="/storage/6136-6464/Documents"     # Seu caminho do cartão SD
 readonly MAX_BACKUPS=5                                   # Número de backups para manter
-```
+</pre>
+</code>
 
 ### Sistema de Notificações
 
@@ -109,13 +116,15 @@ termux-job-scheduler \
 
 ### Estrutura de Diretórios
 
-```
+<code>
+<pre>
 /storage/6136-6464/Documents/
 ├── backup_20231215_143000/     # Pasta de backup com timestamp
 ├── backup_20231216_143000/
 ├── backup.log                  # Logs das operações
 └── (mantém os últimos 5 backups)
-```
+</pre>
+</code>
 
 ### Personalização
 
@@ -133,7 +142,8 @@ Modifique os padrões de exclusão na função get_exclude_patterns().
 
 ### Exemplo de Log e Notificações
 
-```
+<code>
+<pre>
 [2024-01-15 14:30:00] === INICIANDO SISTEMA DE BACKUP ===
 📢 NOTIFICAÇÃO: "🔄 Backup Iniciado" - "Fazendo backup: htdocs"
 [2024-01-15 14:30:01] ✅ Diretório criado com sucesso
@@ -144,7 +154,8 @@ Modifique os padrões de exclusão na função get_exclude_patterns().
 [2024-01-15 14:30:15]    • Tamanho: 150MB
 [2024-01-15 14:30:15]    • Arquivos: 245
 [2024-01-15 14:30:15]    • Diretórios: 15
-```
+</pre>
+</code>
 
 ### Solução de Problemas
 
