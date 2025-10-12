@@ -9,10 +9,10 @@
 # ========================================
 
 # CONFIGURAÇÕES PRINCIPAIS
-readonly PROJECT_DIR="${BACKUP_PROJECT_DIR:-$PREFIX/tmp}"
-readonly BACKUP_DRIVE="${BACKUP_DRIVE_DIR:-$HOME}"
+readonly PROJECT_DIR="/sdcard/htdocs"
+readonly BACKUP_DRIVE="/storage/6136-6464/Documents"
 readonly LOG_FILE="${BACKUP_DRIVE}/backup.log"
-readonly MAX_BACKUPS=${BACKUP_MAX_COPIES:-7}
+readonly MAX_BACKUPS=5
 
 # VARIÁVEIS GLOBAIS
 BACKUP_DIR=""
@@ -142,6 +142,7 @@ clean_unwanted_files() {
 
 # Função: Executar backup principal
 platform_backup() {
+	termux-notification -t "Backup iniciado" -c "Cópia de arquivos sendo feita nesse momento..."
 	log_message "Iniciando cópia dos arquivos..."
 
 	command -v rsync >/dev/null 2>&1 && backup_with_rsync || backup_with_cp
@@ -171,7 +172,9 @@ show_backup_report() {
 		log_message "  • Arquivos: $files"
 		log_message "  • Diretórios: $((dirs -1))"
 		log_message "  • Local: $(basename "$BACKUP_DIR")"
+		termux-notification -t "Backup finalizado" -c "Cópia de arquivos feita com sucesso"
 	else
+		termux-notification -t "Backup falhou" -c "Cópia de arquivos falhou (status: $?)"
 		log_message "Erro: Falha no backup - Status $BACKUP_RESULT"
 	fi
 }

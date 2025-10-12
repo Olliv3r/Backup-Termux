@@ -1,142 +1,193 @@
 # Script de Backup Automatizado para Termux
 
-Um script robusto e completo de automação de backups desenvolvido especificamente para Termux em dispositivos Android. Oferece backups automáticos e agendados dos seus projetos com recursos profissionais e sistema de logs abrangente.
+Um script robusto e eficiente de automação de backup desenvolvido especificamente para Termux no Android. Este script fornece backups diários automáticos dos seus projetos com gerenciamento inteligente de arquivos e registro detalhado.
 
-## 🚀 Funcionalidades
+### Funcionalidades
 
-- **🕒 Agendamento Inteligente** - Horários configuráveis através de variáveis de ambiente
-- **📦 Backup Eficiente** - Usa `rsync` para transferências otimizadas com fallback para `cp`
-- **🧹 Limpeza Automática** - Mantém apenas os backups mais recentes (quantidade configurável)
-- **📊 Logs Detalhados** - Registros completos com timestamps e detalhes das operações
-- **🚫 Exclusões Inteligentes** - Exclui automaticamente diretórios desnecessários (`node_modules`, `.git`, `.cache`, etc.)
-- **🔔 Suporte a Notificações** - Integração opcional com Termux:API para notificações no Android
-- **⚡ Otimizado em Performance** - Uso mínimo de recursos com operações de arquivo eficientes
+- Backups Automatizados - Executa automaticamente em horários agendados usando Termux Job Scheduler
+- Gerenciamento Inteligente - Exclui diretórios desnecessários (node_modules, .git, arquivos de cache)
+- Múltiplas Versões - Mantém automaticamente até 5 backups mais recentes
+- Logs Detalhados - Registros completos com timestamps e detalhes das operações
+- Métodos Duplos - Usa rsync para eficiência, fallback para cp se necessário
+- Notificações em Tempo Real - Notifica quando o backup inicia e finaliza (com Termux-API)
+- Otimizado para Android - Desenvolvido especificamente para ambiente Termux
 
-## 🛠️ Começo Rápido
+### Requisitos Obrigatórios
 
-### Uso Básico
-```bash
-# Tornar executável
-chmod +x backup_termux.sh
+Aplicativos Necessários:
 
-# Executar imediatamente
-./backup_termux.sh
-```
+1. Termux (obrigatório) - Download na ![F-Droid](https://f-droid.org/pt_BR/packages/com.termux/)
+2. Termux:API (obrigatório para notificações) - Download na ![F-Droid](https://f-droid.org/pt_BR/packages/com.termux.api/)
 
-Configuração via Variáveis de Ambiente
-
-```bash
-export BACKUP_PROJECT_DIR="$HOME/seu_projeto"
-export BACKUP_DRIVE_DIR="/storage/seu-cartao-sd"
-export BACKUP_MAX_COPIES="10"
-
-./backup_termux.sh
-```
-
-⚙️ Configuração
-
-Variável Descrição Padrão
-BACKUP_PROJECT_DIR Diretório de origem para backup $HOME
-BACKUP_DRIVE_DIR Local de destino do backup $PREFIX/tmp
-BACKUP_MAX_COPIES Número de backups para reter 10
-
-📁 Estrutura do Backup
+### Pacotes Termux:
 
 ```
-destino_do_backup/
-├── backup_20231215_143000/
-│   ├── seus_arquivos...
-│   └── seus_diretorios...
-├── backup_20231214_143000/
-└── backup.log
+pkg update && pkg upgrade -y
+pkg install termux-api rsync -y
+termux-setup-storage
 ```
 
-🔧 Funcionalidades Avançadas
+### Configuração
 
-Padrões de Exclusão
+#### Variáveis de Ambiente
 
-Exclui automaticamente:
+O script usa as seguintes variáveis de ambiente. Você pode modificá-las diretamente no script:
 
-· node_modules/, .git/, .cache/, __pycache__/
-· *.tmp, *.log, *.swp, .DS_Store
+```
+# Diretório do projeto para backup
+readonly PROJECT_DIR="/sdcard/htdocs"
 
-Sistema de Logs Profissional
+# Destino do backup (caminho do cartão SD)
+readonly BACKUP_DRIVE="/storage/6136-6464/Documents"
 
-```log
-[2023-12-15 14:30:00] === INICIANDO SISTEMA DE BACKUP ===
-[2023-12-15 14:30:05] ✅ BACKUP CONCLUÍDO COM SUCESSO!
-[2023-12-15 14:30:05] 📊 Estatísticas:
-[2023-12-15 14:30:05]    • Tamanho: 150MB
-[2023-12-15 14:30:05]    • Arquivos: 245
-[2023-12-15 14:30:05]    • Diretórios: 15
+# Localização do arquivo de log
+readonly LOG_FILE="${BACKUP_DRIVE}/backup.log"
+
+# Número de versões de backup para manter
+readonly MAX_BACKUPS=5
 ```
 
-🎯 Casos de Uso
+Como Modificar as Variáveis de Ambiente
 
-· 📱 Desenvolvimento Mobile - Backup de projetos de programação em movimento
-· 🔧 Administração de Sistemas - Backups automatizados de configurações
-· 📚 Projetos de Estudantes - Manter trabalhos escolares seguros
-· 💼 Documentos de Trabalho - Backup automático de arquivos importantes
+Opção 1: Editar diretamente no script
 
-🔄 Integração
+```
+nano backup_script.sh
+```
 
-Com Termux Job Scheduler
+Altere estas linhas:
 
-```bash
+```
+readonly PROJECT_DIR="/sdcard/htdocs"                    # Seu caminho do projeto
+readonly BACKUP_DRIVE="/storage/6136-6464/Documents"     # Seu caminho do cartão SD
+readonly MAX_BACKUPS=5                                   # Número de backups para manter
+```
+
+### Sistema de Notificações
+
+Com Termux-API instalado, você receberá:
+
+- Notificação de Início - Quando o backup começa a ser executado
+- Notificação de Sucesso - Com som e vibração quando o backup é concluído
+- Notificação de Erro - Com som contínuo se ocorrer algum problema
+- Estatísticas - Tamanho do backup e quantidade de arquivos copiados
+
+### Testar Notificações:
+
+```
+# Teste se as notificações estão funcionando
+termux-notification --title "Teste Backup" --content "Notificações funcionando!" --sound
+```
+
+### Como Usar
+
+Execução Manual (com notificações)
+
+```
+bash backup_script.sh
+```
+
+### Agendamento Automático com Termux Job Scheduler
+
+```
+# Agendar backup diário às 2:00 da manhã
 termux-job-scheduler \
-  --script "backup_termux.sh" \
+  --script "backup_script.sh" \
   --job-id "backup_diario" \
   --period-ms 86400000 \
   --persisted true
 ```
 
-Com Cron (Termux)
-
-```bash
-# Adicionar ao crontab -e
-0 2 * * * /data/data/com.termux/files/home/backup_script.sh
-```
-
-🛡️ Recursos de Confiabilidade
-
-· ✅ Verificações pré-execução - Valida diretórios e permissões
-· 🔄 Mecanismos de fallback - Degradação rsync → cp
-· 📝 Tratamento abrangente de erros - Mensagens de erro detalhadas e códigos de saída
-· 🔍 Verificação de dependências - Verifica ferramentas necessárias
-
-📊 Exemplo de Saída
+### Teste Rápido (executa em 2 minutos com notificações)
 
 ```
-[2023-12-15 14:30:00] 🚀 === INICIANDO SISTEMA DE BACKUP ===
-[2023-12-15 14:30:01] ✅ Diretório criado com sucesso
-[2023-12-15 14:30:02] 🔄 Usando rsync (modo profissional)
-[2023-12-15 14:30:05] ✅ BACKUP CONCLUÍDO COM SUCESSO!
-[2023-12-15 14:30:05] 📊 Estatísticas:
-[2023-12-15 14:30:05]    • Tamanho: 150MB
-[2023-12-15 14:30:05]    • Arquivos: 245
-[2023-12-15 14:30:05]    • Diretórios: 15
-[2023-12-15 14:30:05]    • Local: backup_20231215_143000
-[2023-12-15 14:30:06] 🎉 BACKUP FINALIZADO COM SUCESSO!
-```
-
-🎯 Agendamento Automático
-
-Comando Simples para Backup Diário
-
-```bash
 termux-job-scheduler \
-  --script "backup_termux.sh" \
-  --job-id "meu_backup" \
-  --period-ms 86400000 \
-  --persisted true
+  --script "backup_script.sh" \
+  --job-id "teste_backup" \
+  --period-ms 120000
 ```
 
-🤝 Contribuindo
+### Estrutura de Diretórios
 
-Sinta-se à vontade para enviar issues e solicitações de melhoria! Este script foi projetado para ser modular e facilmente extensível.
+```
+/storage/6136-6464/Documents/
+├── backup_20231215_143000/     # Pasta de backup com timestamp
+├── backup_20231216_143000/
+├── backup.log                  # Logs das operações
+└── (mantém os últimos 5 backups)
+```
 
-📄 Licença
+### Personalização
 
-Código aberto - sinta-se livre para modificar e distribuir conforme necessário.
+Diretórios Excluídos
 
-Por Olliv3r - Nunca mais perca seu trabalho! 🎉
+O script exclui automaticamente:
+
+- node_modules/ - Dependências Node.js
+- .git/ - Controle de versão Git
+- .cache/ - Arquivos de cache
+- __pycache__/ - Cache Python
+- *.tmp, *.log, *.swp - Arquivos temporários
+
+Modifique os padrões de exclusão na função get_exclude_patterns().
+
+### Exemplo de Log e Notificações
+
+```
+[2024-01-15 14:30:00] === INICIANDO SISTEMA DE BACKUP ===
+📢 NOTIFICAÇÃO: "🔄 Backup Iniciado" - "Fazendo backup: htdocs"
+[2024-01-15 14:30:01] ✅ Diretório criado com sucesso
+[2024-01-15 14:30:05] 🔄 Usando rsync (modo profissional)
+[2024-01-15 14:30:15] ✅ BACKUP CONCLUÍDO COM SUCESSO!
+📢 NOTIFICAÇÃO: "✅ Backup Concluído" - "htdocs - Tamanho: 150MB - Arquivos: 245"
+[2024-01-15 14:30:15] 📊 Estatísticas:
+[2024-01-15 14:30:15]    • Tamanho: 150MB
+[2024-01-15 14:30:15]    • Arquivos: 245
+[2024-01-15 14:30:15]    • Diretórios: 15
+```
+
+### Solução de Problemas
+
+Problemas Comuns:
+
+· "Permissão negada" - Execute termux-setup-storage
+· "Diretório não encontrado" - Verifique os caminhos PROJECT_DIR e BACKUP_DRIVE
+· "Backup não executa" - Verifique permissões do Termux Job Scheduler
+· "Notificações não funcionam" - Instale Termux:API e teste com termux-notification
+
+Verificar Configuração:
+
+```
+# Verificar se os diretórios existem
+ls -la "/sdcard/htdocs"
+ls -la "/storage/6136-6464/Documents"
+
+Testar notificações
+termux-notification --title "Teste" --content "Sistema OK" --sound
+
+Testar execução manual
+bash backup_script.sh
+```
+
+### Automação
+
+O script foi desenvolvido para funcionar com:
+
+- Termux Job Scheduler (recomendado) - Com notificações automáticas
+- Termux:Boot + agendador personalizado
+- Cron (via pacote cronie)
+- Execução manual
+
+### Importante
+
+- Termux:API é obrigatório para receber as notificações de status do backup
+- Sem o Termux:API, o backup ainda funcionará, mas sem notificações
+- Configure as permissões de bateria para "Não otimizar" no Android
+
+### Licença
+
+Código aberto - sinta-se livre para modificar e distribuir.
+
+### Dica Profissional
+
+Configure seus caminhos de projeto e backup uma vez, depois automatize para sempre! Com o Termux:API, você receberá notificações sempre que o backup for executado, mantendo você informado sobre o status das suas cópias de segurança.
