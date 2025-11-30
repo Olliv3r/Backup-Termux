@@ -9,8 +9,8 @@
 # ========================================
 
 # CONFIGURAÇÕES PRINCIPAIS
-readonly PROJECT_DIR="/sdcard/htdocs"
-readonly BACKUP_DRIVE="/storage/6136-6464/Documents"
+readonly PROJECT_DIR="/"
+readonly BACKUP_DRIVE="/storage/026E-55B3/Documents/Comunidade-Olive"
 readonly LOG_FILE="${BACKUP_DRIVE}/backup.log"
 readonly MAX_BACKUPS=5
 
@@ -114,7 +114,7 @@ backup_with_cp() {
 	if cp -rv "$PROJECT_DIR"/* "$BACKUP_DRIVE/" 2>&1 | tee -a "$LOG_FILE"; then
 		# Remover diretórios excluídos manualmente
 		clean_unwanted_files
-		return p
+		return 0
 	else
 		return 1
 	fi
